@@ -28,13 +28,24 @@
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/tv_version_info"
         android:layout_below="@+id/tv_last_update" />
 
     <TextView
         android:id="@android:id/empty"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:text="@string/empty_list_message" />
+
+    <TextView
+        android:id="@+id/tv_version_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/version_info"
+        android:textSize="12sp"
+        tools:text="EtPush SDK v4.0.0 build 2" />
 
 </RelativeLayout>

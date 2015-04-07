@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.exacttarget.etpushsdk.ETPush;
 import com.exacttarget.etpushsdk.data.Region;
 import com.exacttarget.etpushsdk.event.GeofenceResponseEvent;
 import com.exacttarget.etpushsdk.util.EventBus;
@@ -28,6 +29,8 @@ public class MainActivity extends ListActivity {
     private static final Handler mainThread = new Handler(Looper.getMainLooper());
     public static final String DATE_FORMAT = "MM/dd/yyyy @ HH:mm:ss";
 
+    private final Runnable updateUiRunnable = new UpdateUIRunnable();
+
     private GeofenceAdapter adapter;
     private List<Region> geofenceList = new ArrayList<>();
 
@@ -37,6 +40,8 @@ public class MainActivity extends ListActivity {
     TextView lastUpdatedOn;
     @InjectView(R.id.progress_bar)
     ProgressBar progressBar;
+    @InjectView(R.id.tv_version_info)
+    TextView versionInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +55,13 @@ public class MainActivity extends ListActivity {
                 of fences.
              */
         }
+        versionInfo.setText(getString(R.string.version_info, ETPush.getSdkVersionName(), ETPush.getSdkVersionCode()));
     }
 
     @Override
     protected void onPause() {
-        EventBus.getDefault().register(this);
+        EventBus.getDefault().unregister(this);
+        mainThread.removeCallbacks(updateUiRunnable);
         super.onPause();
     }
 
@@ -90,12 +97,7 @@ public class MainActivity extends ListActivity {
         if (Looper.myLooper() == Looper.getMainLooper()) {
             updateGeofenceView();
         } else {
-            mainThread.post(new Runnable() {
-                @Override
-                public void run() {
-                    updateGeofenceView();
-                }
-            });
+            mainThread.post(updateUiRunnable);
         }
     }
 
@@ -107,6 +109,13 @@ public class MainActivity extends ListActivity {
             listView.setAdapter(adapter);
         } else {
             adapter.notifyDataSetChanged();
+        }
+    }
+
+    private class UpdateUIRunnable implements Runnable {
+        @Override
+        public void run() {
+            updateGeofenceView();
         }
     }
 }

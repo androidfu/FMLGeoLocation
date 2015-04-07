@@ -26,7 +26,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:6.1.0'
 
     // SDK
-    compile "com.exacttarget.etpushsdk:etsdk:4.0.0.3428002-SNAPSHOT@aar"
+    compile "com.exacttarget.etpushsdk:etsdk:4.0.0.3428003-SNAPSHOT@aar"
 
     // 3rd Party Libraries needed for SDK
     compile 'com.google.android.gms:play-services-location:6.5.87'

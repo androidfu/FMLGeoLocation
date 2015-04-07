@@ -6,4 +6,5 @@
     <string name="fences_last_updated">Fences Last Updated on %1$s</string>
     <string name="empty_list_message">No Active Fences</string>
     <string name="waiting_on_fences">Waiting on Fences ...</string>
+    <string name="version_info">EtPush SDK v%1$s build %2$d</string>
 </resources>
