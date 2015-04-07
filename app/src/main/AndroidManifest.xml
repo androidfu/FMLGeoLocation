@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.androidfu.example.fmlgeolocation">
+
+
+    <!--
+    Permissions for Push notifications
+    TODO update the name to match your package + .permission.C2D_MESSAGE
+    -->
+    <permission
+        android:name="com.androidfu.example.fmlgeolocation.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <!--
+        TODO Update the name to match your package + .permission.C2D_MESSAGE
+    -->
+    <uses-permission android:name="com.androidfu.example.fmlgeolocation.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!--
+        Additional Permissions required by JB4SDK
+    -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- BROADCAST_STICKY does not exist in SDK Explorer and SDK Explorer is working. -->
+    <!--<uses-permission android:name="android.permission.BROADCAST_STICKY" />-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!--
+        Required if you're going to use Location
+    -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <application
+        android:name=".FMLGeoLocationApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- ETPushReceiver and Service -->
+        <receiver
+            android:exported="true"
+            android:name="com.exacttarget.etpushsdk.ETPushReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="com.androidfu.example.fmlgeolocation" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                <data android:scheme="package" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.androidfu.example.fmlgeolocation.MESSAGE_OPENED" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.exacttarget.etpushsdk.ETPushService"
+            android:enabled="true" />
+        <!-- ETPushReceiver and Service -->
+
+        <!-- ETLocationReceiver and Service -->
+        <receiver android:name="com.exacttarget.etpushsdk.ETLocationReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.BATTERY_LOW" />
+                <action android:name="android.intent.action.BATTERY_OKAY" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.location.PROVIDERS_CHANGED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.exacttarget.etpushsdk.ETLocationService"
+            android:enabled="true" />
+        <!-- ETLocationReceiver and Service -->
+
+        <!-- JB4A SDK Activity required for Cloud Page or Open Direct URLs sent from Marketing Cloud -->
+        <activity
+            android:name="com.exacttarget.etpushsdk.ETLandingPagePresenter"
+            android:label="Landing Page" />
+        <!-- JB4A SDK Activity required for Cloud Page or Open Direct URLs sent from Marketing Cloud -->
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+    </application>
+
+</manifest>

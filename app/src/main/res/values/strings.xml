@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">FMLGeoLocation</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="fences_last_updated">Fences Last Updated on %1$s</string>
+    <string name="empty_list_message">No Active Fences</string>
+    <string name="waiting_on_fences">Waiting on Fences ...</string>
+</resources>
